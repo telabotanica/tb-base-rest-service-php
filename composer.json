@@ -1,0 +1,22 @@
+{
+    "name": "telabotanica/tb-base-rest-service",
+    "description": "A simple PHP class that helps building REST webservices",
+    "type": "library",
+    "license": "GPLv3",
+    "keywords": ["telabotanica", "tela-botanica", "tela botanica", "REST", "webservice"],
+    "homepage": "https://github.com/telabotanica/tb-base-rest-service",
+    "authors": [
+        {
+            "name": "Mathias Chouet",
+            "email": "mathias@tela-botanica.org"
+        }
+    ],
+    "require": {
+		"php": ">=5.5.0"
+	},
+	"autoload": {
+		"psr-0": {
+			"BaseRestServiceTB": ""
+		}
+	}
+}
