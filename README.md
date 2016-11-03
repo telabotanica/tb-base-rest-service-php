@@ -32,5 +32,6 @@ class MyService extends BaseRestServiceTB {
 ### mandatory
 - __domain_root__ : root URL of your server
 - __base_uri__ : base path of your webservice
+
 ### non-mandatory
 - __first_resource_separator__ : first character following your base_uri (typically "/" or ":", defaults to "/")
