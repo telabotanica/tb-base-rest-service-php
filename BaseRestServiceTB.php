@@ -25,6 +25,9 @@ class BaseRestServiceTB {
 	/** Base URI (to parse resources) */
 	protected $baseURI;
 
+	/** First resource separator (to parse resources) */
+	protected $firstResourceSeparator;
+
 	public function __construct($config) {
 		$this->config = $config;
 
@@ -34,6 +37,10 @@ class BaseRestServiceTB {
 		// server config
 		$this->domainRoot = $this->config['domain_root'];
 		$this->baseURI = $this->config['base_uri'];
+		$this->firstResourceSeparator = "/";
+		if (!empty ($this->config['first_resource_separator'])) {
+			$this->firstResourceSeparator = $this->config['first_resource_separator'];
+		}
 
 		// initialization
 		$this->getResources();
@@ -108,7 +115,7 @@ class BaseRestServiceTB {
 	protected function getResources() {
 		$uri = $_SERVER['REQUEST_URI'];
 		// slicing URI
-		$baseURI = $this->baseURI . "/";
+		$baseURI = $this->baseURI . $this->firstResourceSeparator;
 		if ((strlen($uri) > strlen($baseURI)) && (strpos($uri, $baseURI) !== false)) {
 			$baseUriLength = strlen($baseURI);
 			$posQM = strpos($uri, '?');
