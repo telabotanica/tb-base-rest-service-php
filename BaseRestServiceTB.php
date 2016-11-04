@@ -10,6 +10,9 @@ class BaseRestServiceTB {
 	/** Configuration given at construct time */
 	protected $config;
 
+	/** Set to true if the script is called over HTTPS */
+	protected $isHTTPS;
+
 	/** HTTP verb received (GET, POST, PUT, DELETE, OPTIONS) */
 	protected $verb;
 
@@ -30,6 +33,9 @@ class BaseRestServiceTB {
 
 	public function __construct($config) {
 		$this->config = $config;
+
+		// Is the script called over HTTPS ? Tricky !
+		$this->isHTTPS = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] != 'off'));
 
 		// HTTP method
 		$this->verb = $_SERVER['REQUEST_METHOD'];
