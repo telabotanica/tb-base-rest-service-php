@@ -1,11 +1,13 @@
 <?php
 
-/* 
+require(dirname(__FILE__) . '/RestServiceTB.php');
+
+/*
  * Base class for REST services
  * @author mathias@tela-botanica.org
  * @date 08/2015
  */
-class BaseRestServiceTB {
+abstract class BaseRestServiceTB implements RestServiceTB {
 
 	/** Configuration given at construct time */
 	protected $config;
@@ -55,6 +57,49 @@ class BaseRestServiceTB {
 		$this->init();
 	}
 
+  /**
+	 * Responds to an HTTP request issued with the GET method/verb.
+	 * Returns the JSON representation of a single resource (or of all resources)
+	 * depending on wether the resource ID is provided in the URL path (or not).
+	 */
+	abstract protected function get();
+
+	/**
+	 * Responds to an HTTP request issued with the POST method/verb.
+	 * Creates a new resource built using the POST parameters passed.
+	 */
+	abstract protected function post();
+
+	/**
+	 * Responds to an HTTP request issued with the PUT method/verb.
+	 * Updates all parameters of the resource identified by the ID provided in
+	 * the URL path if it exists (using the parameters passed). Responds with a
+	 * 404 HTTP response if not.
+	 */
+	abstract protected function put();
+
+	/**
+	 * Responds to an HTTP request issued with the PATCH method/verb.
+	 * Updates parts of the parameters of the resource identified by the ID
+	 * provided in the URL path if it exists  (using the parameters passed).
+	 * Responds with a 404 HTTP response if not.
+	 */
+	abstract protected function patch();
+
+	/**
+	 * Responds to an HTTP request issued with the DELETE method/verb.
+	 * Removes the resource identified by the ID provided in the URL path if it
+	 * exists. Responds with a 404 HTTP response if not.
+	 */
+	abstract protected function delete();
+
+	/**
+	 * Responds to an HTTP request issued with the OPTIONS method/verb.
+	 * Responds with a 200 status with an 'Allow' header listing the HTTP methods
+	 * that may be used on this resource.
+	 */
+	abstract protected function options();
+
 	/** Post-constructor adjustments */
 	protected function init() {
 	}
@@ -74,6 +119,9 @@ class BaseRestServiceTB {
 					break;
 				case "PUT":
 					$this->put();
+					break;
+				case "PATCH":
+					$this->patch();
 					break;
 				case "DELETE":
 					$this->delete();
@@ -166,7 +214,7 @@ class BaseRestServiceTB {
 			return $default;
 		}
 	}
-
+ 
 	/**
 	 * Reads and returns request body contents
 	 */
